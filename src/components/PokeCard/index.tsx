@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Poke, getPokes } from '../../api/poke';
+import Loader from '../Loader';
 
 interface Props {
   name: string;
@@ -34,7 +35,7 @@ class PokeCard extends Component<Props, State> {
             {this.props.name} <br /> <span>Something went wrong: {this.state.error.message}</span>
           </h2>
         ) : !this.state.pokeData ? (
-          <h2>Loading...</h2>
+          <Loader />
         ) : (
           <>
             <h2>{this.props.name}</h2>

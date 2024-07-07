@@ -2,6 +2,7 @@ import { Component, ReactNode } from 'react';
 import PokeCard from '../PokeCard';
 import data from '../../data';
 import { Pokes, getPokes } from '../../api/poke';
+import Loader from '../Loader';
 
 interface Props {
   children?: ReactNode;
@@ -64,7 +65,7 @@ class PokeData extends Component<Props, State> {
         {this.state.error ? (
           <h2>Something went wrong: {this.state.error.message}</h2>
         ) : !this.state.pokes ? (
-          <h2>Loading...</h2>
+          <Loader />
         ) : this.state.noResult ? (
           <h2>Sorry, not found.</h2>
         ) : (
