@@ -24,11 +24,13 @@
     "prettier",
     "@typescript-eslint",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "react-compiler"
   ],
   "rules": {
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",
+    "react-compiler/react-compiler": "error",
     "@typescript-eslint/ban-ts-comment": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "react/react-in-jsx-scope": "off"

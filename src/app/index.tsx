@@ -15,23 +15,21 @@ class App extends Component {
 
   render() {
     return (
-      <>
+      <ErrorBoundary>
         <header></header>
         <main>
           <h1>Poke berry</h1>
-          <ErrorBoundary>
-            <Search
-              setSearchWord={(word: string) => {
-                this.setState({ searchWord: word });
-                localStorage.setItem('search', word);
-              }}
-            />
-            <PokeData searchWord={this.state.searchWord} />
-            <ErrorButton />
-          </ErrorBoundary>
+          <Search
+            setSearchWord={(word: string) => {
+              this.setState({ searchWord: word });
+              localStorage.setItem('search', word);
+            }}
+          />
+          <PokeData searchWord={this.state.searchWord} />
+          <ErrorButton />
         </main>
         <footer></footer>
-      </>
+      </ErrorBoundary>
     );
   }
 }
