@@ -37,8 +37,11 @@ class PokeData extends Component<Props, State> {
 
   async getPokes() {
     try {
+      this.setState({ pokes: null });
       const pokeData: Pokes = (await getPokes(data.pokeApi)) as Pokes;
-      this.setState({ pokes: this.filterPokes(pokeData, this.props.searchWord) });
+      setTimeout(() => {
+        this.setState({ pokes: this.filterPokes(pokeData, this.props.searchWord) });
+      }, 500);
     } catch (error) {
       this.setState({ error: error as Error });
     }

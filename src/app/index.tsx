@@ -20,7 +20,6 @@ class App extends Component {
         <main>
           <h1>Poke berry</h1>
           <ErrorBoundary>
-            <ErrorButton />
             <Search
               setSearchWord={(word: string) => {
                 this.setState({ searchWord: word });
@@ -28,6 +27,7 @@ class App extends Component {
               }}
             />
             <PokeData searchWord={this.state.searchWord} />
+            <ErrorButton />
           </ErrorBoundary>
         </main>
         <footer></footer>

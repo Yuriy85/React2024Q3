@@ -19,7 +19,7 @@ class Search extends Component<Props, State> {
 
   render() {
     return (
-      <div className="search container">
+      <form className="search container">
         <input
           value={this.state.search}
           className="search__input"
@@ -28,14 +28,15 @@ class Search extends Component<Props, State> {
           }}
         ></input>
         <button
-          onClick={() => {
+          onClick={(event) => {
+            event.preventDefault();
             this.props.setSearchWord(this.state.search);
           }}
           className="search__button"
         >
           Search
         </button>
-      </div>
+      </form>
     );
   }
 }
