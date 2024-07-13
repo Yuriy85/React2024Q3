@@ -1,44 +1,32 @@
-import { Component } from 'react';
-
-interface State {
-  search: string;
-}
+import { useState } from 'react';
 
 interface Props {
-  setSearchWord: (word: string) => void;
+  searchWord: string;
+  setSearchWord: React.Dispatch<React.SetStateAction<string>>;
 }
 
-class Search extends Component<Props, State> {
-  public state: Readonly<State> = { search: '' };
-  componentDidMount(): void {
-    const searchText = localStorage.getItem('search');
-    if (searchText) {
-      this.setState({ search: searchText });
-    }
-  }
+function Search(props: Props) {
+  const [search, setSearch] = useState(localStorage.getItem('search') || '');
 
-  render() {
-    return (
-      <form className="search container">
-        <input
-          value={this.state.search}
-          className="search__input"
-          onChange={(event) => {
-            this.setState({ search: event.currentTarget.value });
-          }}
-        ></input>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            this.props.setSearchWord(this.state.search);
-          }}
-          className="search__button"
-        >
-          Search
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className="search container">
+      <input
+        value={search}
+        className="search__input"
+        onChange={(event) => setSearch(event.currentTarget.value)}
+      ></input>
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          props.setSearchWord(search);
+          localStorage.setItem('search', search);
+        }}
+        className="search__button"
+      >
+        Search
+      </button>
+    </form>
+  );
 }
 
 export default Search;
