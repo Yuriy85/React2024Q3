@@ -1,0 +1,28 @@
+.poke-data__card {
+  @include border;
+  width: fit-content;
+  width: 15rem;
+  padding: 0.5rem;
+  height: fit-content;
+  cursor: pointer;
+  h2 {
+    text-align: center;
+    margin: 0.5rem;
+    span {
+      font-size: 1rem;
+      line-height: 1rem;
+    }
+  }
+  p {
+    margin: 0.5rem;
+    overflow-wrap: break-word;
+  }
+}
+.poke-data__detail {
+  margin: 10px 0;
+  cursor: auto;
+}
+
+.poke-data {
+  flex-wrap: nowrap;
+}
