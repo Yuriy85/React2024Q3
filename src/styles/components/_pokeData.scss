@@ -2,8 +2,9 @@
   @include border;
   width: fit-content;
   width: 15rem;
-  min-height: 10rem;
   padding: 0.5rem;
+  height: fit-content;
+  cursor: pointer;
   h2 {
     text-align: center;
     margin: 0.5rem;
@@ -16,4 +17,12 @@
     margin: 0.5rem;
     overflow-wrap: break-word;
   }
+}
+.poke-data__detail {
+  margin: 10px 0;
+  cursor: auto;
+}
+
+.poke-data {
+  flex-wrap: nowrap;
 }

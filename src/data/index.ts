@@ -1,5 +1,5 @@
 interface Data {
-  readonly [key: string]: string;
+  readonly pokeApi: string;
 }
 const data: Data = {
   pokeApi: 'https://pokeapi.co/api/v2/berry',
