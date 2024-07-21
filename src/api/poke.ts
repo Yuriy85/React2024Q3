@@ -36,7 +36,6 @@ export const getPokes = async (
   ).data;
   const pokesCount = result.count;
   const pageCount = Math.ceil(pokesCount / limit);
-  console.log(page);
   if (isNaN(page) || page < 1 || page > pageCount) {
     throw new Error('Page not found');
   }

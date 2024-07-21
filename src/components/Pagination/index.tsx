@@ -12,7 +12,6 @@ function Pagination(props: Props) {
 
   useEffect(() => {
     setPages(props.pageCount);
-    console.log(props.pageCount);
   }, [props.pageCount]);
 
   return (

@@ -7,11 +7,17 @@
  */
 html {
   box-sizing: border-box;
-  min-height: 100vh;
+  height: 100%;
   min-width: $min-width;
-  background: $main-gradient;
 }
 
+body {
+  height: 100%;
+  margin-top: -8px;
+}
+#root {
+  height: 100%;
+}
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
  * Since `*` has a specificity of 0, it does not override the `html` value
