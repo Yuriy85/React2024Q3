@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MyReducerState } from '../../store';
 import { checkedSlice } from '../../store/reducers/CheckedSlice';
+import { downloadCSV } from '../../utils/downloadCSV';
 
 function CheckedDetail() {
   const dispatch = useDispatch();
@@ -18,7 +19,14 @@ function CheckedDetail() {
           <button className="theme-button" onClick={() => dispatch(clearCheckedCards())}>
             Unselect all
           </button>
-          <button className="theme-button">Download</button>
+          <button
+            className="theme-button"
+            onClick={() => {
+              downloadCSV(checkedCards, `${checkedCards.length}_poke`);
+            }}
+          >
+            Download
+          </button>
         </div>
       ) : null}
     </>

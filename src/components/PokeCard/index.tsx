@@ -43,9 +43,10 @@ function PokeCard(props: Props) {
         onClick={(event) => event.stopPropagation()}
         onChange={(event) => {
           const checkbox: HTMLInputElement = event.target as HTMLInputElement;
+          const checkedData = { number: 0, name: props.name, id: getPokeId(), url: props.url };
           checkbox.checked
-            ? dispatch(addCheckedCard(getPokeId()))
-            : dispatch(removeCheckedCard(getPokeId()));
+            ? dispatch(addCheckedCard(checkedData))
+            : dispatch(removeCheckedCard(checkedData));
         }}
       ></input>
     </div>
