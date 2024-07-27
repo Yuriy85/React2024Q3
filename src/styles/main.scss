@@ -14,7 +14,7 @@
 
 // 5. Components
 @import 'components/themeButton', 'components/errorButton', 'components/pokeData',
-  'components/errorBoundary', 'components/search', 'components/pages';
+  'components/errorBoundary', 'components/search', 'components/pages', 'components/loader';
 
 // 6. Page-specific styles
 @import 'pages/404', 'pages/home';

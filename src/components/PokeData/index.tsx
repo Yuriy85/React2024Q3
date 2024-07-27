@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import PokeCard from '../PokeCard';
-import data from '../../data';
-import { Pokes, getPokes } from '../../api/poke';
+import appData from '../../data';
+import { Pokes, fetchPoke } from '../../api/poke';
 import Loader from '../Loader';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { trimPath } from '../../utils/trimArray';
+import { trimPath } from '../../utils/trimPath';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface Props {
   searchWord: string;
@@ -12,51 +13,35 @@ interface Props {
 }
 
 function PokeData(props: Props) {
-  const [pokes, setPokes] = useState<Pokes | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+  const [offset, setOffset] = useState(0);
+  const { data: pokes, error, isFetching } = fetchPoke.useGetAllPokeQuery(offset);
+  const [filteredPokes, setFilteredPokes] = useState(pokes);
   const [noResult, setNoResults] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { page } = useParams();
   const { detail } = useParams();
 
-  const setUpperChar = (string: string) => {
-    return `${string[0].toUpperCase()}${string.slice(1)}`;
-  };
-
+  const setUpperChar = (string: string) => `${string[0].toUpperCase()}${string.slice(1)}`;
   const filterPokes = (pokeData: Pokes, searchWord: string) => {
-    const filteredPokeData: Pokes = Object.create(pokeData);
     const result = pokeData.results.filter((poke) =>
       poke.name.toLowerCase().includes(searchWord.toLowerCase().trimStart())
     );
-    filteredPokeData.results = result;
     setNoResults(!result.length);
-    return filteredPokeData;
-  };
-
-  const getPokesData = async (page?: number) => {
-    try {
-      setPokes(null);
-      const pokeData = await getPokes(data.pokeApi, page);
-      props.setPageCount(+pokeData.pages);
-      setPokes(filterPokes(pokeData.pokes, props.searchWord));
-    } catch (error) {
-      setError(error as Error);
-    }
+    const filteredPokes: Pokes = { ...pokeData, results: result };
+    return filteredPokes;
   };
 
   useEffect(() => {
-    if (!error) return;
-    navigate('/404');
-  }, [error]);
+    if (!pokes) return;
+    setFilteredPokes(filterPokes(pokes, props.searchWord));
+    props.setPageCount(Math.ceil(pokes.count / appData.pageLimit));
+  }, [pokes, props.searchWord]);
 
   useEffect(() => {
-    if (page) {
-      getPokesData(+page);
-      return;
-    }
-    getPokesData();
-  }, [props.searchWord, page]);
+    if (!page) return;
+    setOffset((+page - 1) * appData.pageLimit);
+  }, [page]);
 
   return (
     <div className="poke-data container">
@@ -64,15 +49,13 @@ function PokeData(props: Props) {
         className="container"
         onClick={() => detail && navigate(trimPath(location.pathname, 'detail'))}
       >
-        {!pokes ? (
-          <Loader />
-        ) : noResult ? (
-          <h2>Sorry, not found.</h2>
-        ) : (
-          pokes.results.map((result) => (
+        {error && <h2>{(error as FetchBaseQueryError).status}</h2>}
+        {isFetching && <Loader />}
+        {noResult && <h2>Sorry, not found.</h2>}
+        {filteredPokes &&
+          filteredPokes.results.map((result) => (
             <PokeCard key={result.name} name={setUpperChar(result.name)} url={result.url} />
-          ))
-        )}
+          ))}
       </div>
       <Outlet />
     </div>

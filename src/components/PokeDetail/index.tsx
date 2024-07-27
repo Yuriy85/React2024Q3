@@ -1,43 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { trimPath } from '../../utils/trimArray';
-import { useEffect, useState } from 'react';
-import { Poke, getPoke } from '../../api/poke';
+import { trimPath } from '../../utils/trimPath';
+import { fetchPoke } from '../../api/poke';
 import Loader from '../Loader';
-import data from '../../data';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 function PokeDetail() {
-  const [poke, setPoke] = useState<Poke | null>(null);
-  const [error, setError] = useState<Error | null>(null);
   const { detail } = useParams();
+  const { data: poke, error, isFetching } = fetchPoke.useGetPokeInfoQuery(detail || '');
   const navigate = useNavigate();
-
-  const getPokeData = async (url: string) => {
-    try {
-      setPoke(null);
-      const pokeData = await getPoke(url);
-      setPoke(pokeData);
-    } catch (error) {
-      setError(error as Error);
-    }
-  };
-
-  useEffect(() => {
-    if (!error) return;
-    navigate('/404');
-  }, [error]);
-
-  useEffect(() => {
-    if (!detail) {
-      return;
-    }
-    getPokeData(`${data.pokeApi}/${detail}`);
-  }, [detail]);
 
   return (
     <div className="poke-data__card poke-data__detail">
-      {!poke ? (
-        <Loader />
-      ) : (
+      {error && <h2>{(error as FetchBaseQueryError).status}</h2>}
+      {isFetching && <Loader />}
+      {poke && (
         <>
           <div
             style={{ cursor: 'pointer', fontSize: '2rem', width: 'fit-content' }}

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { trimPath } from '../../utils/trimArray';
+import { trimPath } from '../../utils/trimPath';
 import { useSelector } from 'react-redux';
 import { checkedSlice } from '../../store/reducers/CheckedSlice';
 import { useDispatch } from 'react-redux';

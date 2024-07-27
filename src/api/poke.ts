@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import appData from '../data';
 
 export interface Pokes {
   count: number;
@@ -22,44 +23,21 @@ export interface Poke {
   max_harvest: number;
 }
 
-export const getPokes = async (
-  api: string,
-  page = 1,
-  limit = 20
-): Promise<{ pokes: Pokes; pages: number }> => {
-  let result = (
-    await axios.get(api, {
-      params: {
-        limit,
-      },
-    })
-  ).data;
-  const pokesCount = result.count;
-  const pageCount = Math.ceil(pokesCount / limit);
-  if (isNaN(page) || page < 1 || page > pageCount) {
-    throw new Error('Page not found');
-  }
-  const offset = (page - 1) * limit;
-  if (page !== 1) {
-    result = (
-      await axios.get(api, {
-        params: {
-          limit,
-          offset,
-        },
-      })
-    ).data;
-  }
+export const fetchPoke = createApi({
+  reducerPath: 'fetchPoke',
+  baseQuery: fetchBaseQuery({ baseUrl: appData.baseUrl }),
+  endpoints: (build) => ({
+    getAllPoke: build.query<Pokes, number>({
+      query: (offset = 0, limit = appData.pageLimit) => ({
+        url: '',
+        params: { limit, offset },
+      }),
+    }),
 
-  return { pokes: result, pages: pageCount };
-};
-
-export const getPoke = async (url: string): Promise<Poke> => {
-  const result = (
-    await axios.get(url, {
-      params: {},
-    })
-  ).data;
-
-  return result;
-};
+    getPokeInfo: build.query<Poke, string>({
+      query: (id) => ({
+        url: `/${id}`,
+      }),
+    }),
+  }),
+});

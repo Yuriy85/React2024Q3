@@ -1,8 +1,10 @@
 interface Data {
-  readonly pokeApi: string;
+  readonly baseUrl: string;
+  readonly pageLimit: number;
 }
-const data: Data = {
-  pokeApi: 'https://pokeapi.co/api/v2/berry',
+const appData: Data = {
+  baseUrl: 'https://pokeapi.co/api/v2/berry/',
+  pageLimit: 20,
 };
 
-export default data;
+export default appData;
