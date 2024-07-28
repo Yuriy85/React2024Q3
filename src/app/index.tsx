@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Search from '../components/Search/index';
 import ErrorButton from '../components/ErrorButton';
 import PokeData from '../components/PokeData';
@@ -13,8 +13,6 @@ function App() {
   const [searchWord, setSearchWord] = useState(localStorage.getItem('search') || '');
   const [pageCount, setPageCount] = useState<number | null>(null);
   const [darkTheme, setDarkTheme] = useState(false);
-
-  useEffect(() => console.log(darkTheme), [darkTheme]);
 
   return (
     <ThemeContext.Provider value={{ darkTheme, setDarkTheme }}>

@@ -42,3 +42,5 @@ export const checkedSlice = createSlice({
 });
 
 export default checkedSlice.reducer;
+export const { addCheckedCard, removeCheckedCard, clearCheckedCards } = checkedSlice.actions;
+export const checkedSliceReducer = checkedSlice.reducer;

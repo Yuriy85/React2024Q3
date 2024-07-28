@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import checkedSliceReducer from './reducers/CheckedSlice';
 import { fetchPoke } from '../api/poke';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   checkedSliceReducer,
   [fetchPoke.reducerPath]: fetchPoke.reducer,
 });
