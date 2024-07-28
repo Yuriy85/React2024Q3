@@ -1,0 +1,16 @@
+.search {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.search__button {
+  @include button;
+}
+
+.search__input {
+  @include border;
+  border-style: inset;
+  line-height: 1rem;
+}
