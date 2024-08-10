@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import PokeCard from '../PokeCard';
 import appData from '../../data';
