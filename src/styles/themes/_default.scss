@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+// When having several themes, this file contains everything related to the
+// default one.
+// -----------------------------------------------------------------------------
+.main-theme {
+  min-height: 100%;
+  padding: 1rem;
+  background: $main-gradient;
+}
+.dark-theme {
+  min-height: 100%;
+  padding: 1rem;
+  background: $main-gradient;
+  filter: invert(1);
+}
